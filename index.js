@@ -123,6 +123,21 @@ app.get('/exercises/:exe_cat_id', function(req, res){
 });
 
 
+app.get('/exercises/:id', function(req, res){
+    let exeId = req.params.id;
+
+    let data = {
+        where: {id: exeId}
+    }
+
+    Exercise.findAll(data).then((result) => {
+        res.status(200).send(result);
+    }).catch((err) => {
+        res.status(500).send(err);
+    });
+});
+
+
 
 app.get('/exercise_categories', function (req, res) {
     let data = {

@@ -22,6 +22,10 @@ const Exercise = config.define('Exercise',{
     video: {
         type: Sequelize.STRING,
         allowNull: true
+    },
+    info: {
+        type: Sequelize.STRING,
+        allowNull: true
     }
 }, {timestamps: false});
 

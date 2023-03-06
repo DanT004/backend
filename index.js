@@ -98,15 +98,15 @@ app.get('/user_info/:user_id', function(req, res){
 
 
 
-app.get('/todays_workout', function(req, res) {
-    Todays_workout.findAll().then(function(results){
-        res.status(200).send(results);
-    }).catch(function (err){
-        res.status(500).send(err);
-    })
-})
+// app.get('/todays_workout', function(req, res) {
+//     Todays_workout.findAll().then(function(results){
+//         res.status(200).send(results);
+//     }).catch(function (err){
+//         res.status(500).send(err);
+//     })
+// })
 
-app.post('/todays_workout/:id', function( req, res) {
+app.post('/todays_workout', function( req, res) {
     Todays_workout.create(req.body)
     .then(function (result) {
         res.status(200).send(result);

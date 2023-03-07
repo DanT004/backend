@@ -1,3 +1,4 @@
+const { SqlError } = require('mariadb');
 const { STRING } = require('sequelize');
 const Sequelize = require('sequelize');
 const config = require('../config');
@@ -56,6 +57,10 @@ const Todays_workout = config.define('Todays_workout', {
     user_id: {
         type: Sequelize.INTEGER,
         allowNull: true
+    },
+    title: {
+        type: Sequelize.STRING,
+        allowNull: false
     },
     // exercises: {
     //     type: Sequelize.STRING,

@@ -134,6 +134,62 @@ app.delete('/todays_workout/:id', function(req, res) {
     })
 })
 
+app.get('/workout_list/:user_id', function(req, res){
+    let userId = req.params.user_id;
+
+    let data = {
+        where: {user_id: userId}
+    }
+
+    Todays_workout.findAll(data).then((result) => {
+        res.status(200).send(result);
+    }).catch((err) => {
+        res.status(500).send(err);
+    });
+});
+
+app.get('/list/:id', function(req, res){
+    let Id = req.params.id;
+
+    let data = {
+        where: {id:Id}
+    }
+
+    Todays_workout.findAll(data).then((result) => {
+        res.status(200).send(result);
+    }).catch((err) => {
+        res.status(500).send(err);
+    });
+});
+
+app.post('/workout_list', function( req, res) {
+    Todays_workout.create(req.body)
+    .then(function (result) {
+        res.status(200).send(result);
+    })
+    .catch(function (err) {
+        res.status(500).send(err);
+    });
+})
+
+app.delete('/workout_list/:id', function(req, res) {
+    let id = parseInt(req.params.id);
+
+    Todays_workout.findByPk(id)
+    .then(function (result) {
+        if (result) {
+            result.destroy().then(function () {
+                res.status(200).send(result);
+            })
+            .catch(function (err) {
+                res.status(500).send(err);
+            });
+        } else {
+            res.status(404).send('Workout Record was not Found');
+        }
+    })
+})
+
 
 
 

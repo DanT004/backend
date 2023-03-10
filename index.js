@@ -10,16 +10,32 @@ const Todays_workout = require('./models/todays_workout');
 
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
 const saltRounds = 10;
 
 app.use(cors()); 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(express.static('uploads'));
 
 
 
 
-app.post('/signup', function(req, res){
+let storage = multer.diskStorage({
+    destination: (req, file, cb) =>{
+        cb(null, './uploads');
+    },
+    filename: (req,file, cb) => {
+        cb(null, file.originalname);
+    }
+});
+let upload = multer({
+    storage: storage
+});
+
+
+app.post('/signup', upload.single('img'), function(req, res){
+    console.log(req.file);
 
     let plainPassword = req.body.password;
 
@@ -30,7 +46,8 @@ app.post('/signup', function(req, res){
             last_name: req.body.last_name,
             email: req.body.email,
             contact: req.body.contact,
-            password: hash
+            password: hash,
+            img: req.file ? req.file.filename: null
         };
 
         User_Info.create(user_data).then((result) => {
